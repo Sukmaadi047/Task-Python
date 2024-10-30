@@ -119,8 +119,7 @@ http://127.0.0.1:8000
 ### **1. Mendapatkan Token JWT**  
 Gunakan perintah berikut untuk login dan mendapatkan token JWT:  
 ```bash
-curl --noproxy "*" -X POST http://127.0.0.1:8000/api/login/ \
--d "username=alice&password=12345678"
+curl --noproxy "*" -X POST http://127.0.0.1:8000/api/login/ -d "username=alice&password=12345678"
 ```
 
 Jika berhasil, respons akan berisi token JWT:  
@@ -134,6 +133,5 @@ Jika berhasil, respons akan berisi token JWT:
 ### **2. Mengakses Endpoint Terproteksi dengan JWT**  
 Gunakan token JWT untuk mengakses route yang membutuhkan otentikasi:  
 ```bash
-curl -H "Authorization: Bearer <jwt-access-token>" \
-http://127.0.0.1:8000/api/protected/
+curl -H "Authorization: Bearer <jwt-access-token>" http://127.0.0.1:8000/api/protected/
 ```
