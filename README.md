@@ -138,12 +138,17 @@ curl --noproxy "*" -X POST http://127.0.0.1:8000/api/token/verify/ -H "Content-T
 ```
 
 # **Hash Password**
+Kelas CustomPBKDF2PasswordHasher di file sso_service/auth_sso/hashers.py
+Fungsi validasi password (test_validate_password) di file sso_service/auth_sso/tests.py
+
 ## **Cara Kerja Hash Password**
+
 Hash password adalah proses konversi password menjadi string acak yang tidak dapat dibaca. Proses ini melibatkan beberapa langkah:
 ### **1. Pembuatan Salt:** Salt adalah data acak yang ditambahkan ke password sebelum hashing untuk mencegah serangan rainbow table.
 ### **2. Hashing:** Password digabungkan dengan salt dan di-hash menggunakan algoritma tertentu (dalam hal ini, PBKDF2).
 ### **3. Penyimpanan:** Hasil hash dan salt disimpan dalam database.
 
 ## **Alasan Menggunakan PBKDF2**
+
 ### **Keamanan:** PBKDF2 dirancang untuk mengatasi serangan brute-force dengan memperlambat proses hashing melalui penggunaan iterasi yang tinggi.
 ### **Standardisasi:** PBKDF2 adalah standar hashing yang diakui, yang diimplementasikan secara luas dalam berbagai platform dan framework.
