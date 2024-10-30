@@ -72,8 +72,7 @@ grpc_project/
 
 ## **Fitur Utama**  
 1. **Login**: Pengguna dapat melakukan login dan menerima JWT token.  
-2. **Protected Routes**: Beberapa endpoint hanya bisa diakses dengan JWT yang valid.  
-3. **Verifikasi Token**: Otomatis memverifikasi token JWT untuk akses aman.  
+2. **Verifikasi Token**: Otomatis memverifikasi token JWT untuk akses aman.  
 
 ---
 
@@ -130,8 +129,8 @@ Jika berhasil, respons akan berisi token JWT:
 }
 ```
 
-### **2. Mengakses Endpoint Terproteksi dengan JWT**  
-Gunakan token JWT untuk mengakses route yang membutuhkan otentikasi:  
+### **2. Menverifikasi Token JWT**  
+Gunakan token JWT untuk verifikasi:  
 ```bash
 curl --noproxy "*" -X POST http://127.0.0.1:8000/api/token/verify/ -H "Content-Type: application/json" -d "{\"token\": \"<jwt-access-token>\"}"
 
