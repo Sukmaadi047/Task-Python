@@ -1,5 +1,6 @@
-Dokumentasi **proyek gRPC**
+**Dokumentasi**
 
+**GRPC Project**
 ## Langkah-Langkah Instalasi
 
 1. **Kloning repositori**:
@@ -58,28 +59,81 @@ grpc_project/
 └── requirements.txt      # Dependensi Python
 ```
 
-## Contoh Penggunaan
+# **SSO Service menggunakan Django Rest Framework dengan JWT**  
 
-Setelah server Django dan gRPC berjalan, jalankan client untuk melihat output berikut:
+## **Arsitektur**  
+- **Backend:** Django Rest Framework untuk API REST.
+- **JWT Authentication:** Token JWT digunakan untuk menjaga sesi pengguna dan otorisasi permintaan.
+- **Modular Service:** Layanan ini berdiri sendiri untuk SSO, memisahkan otentikasi dari layanan utama.
+- **Stateless Authentication:** Karena JWT, tidak ada status sesi yang disimpan di server, sehingga membuat aplikasi lebih ringan dan scalable.  
+- **Keamanan:** Token JWT dienkripsi untuk mencegah pemalsuan, dan token memiliki waktu kedaluwarsa yang dikontrol.
 
+---
+
+## **Fitur Utama**  
+1. **Login**: Pengguna dapat melakukan login dan menerima JWT token.  
+2. **Protected Routes**: Beberapa endpoint hanya bisa diakses dengan JWT yang valid.  
+3. **Verifikasi Token**: Otomatis memverifikasi token JWT untuk akses aman.  
+
+---
+
+## **Cara Menjalankan Proyek**  
+
+### **1. Kloning Repository**  
 ```bash
-Detail Pengguna:
-ID: 1
-Nama: Alice
-Email: alice@example.com
+   git clone <repository-url>
+   cd sso_service
 ```
 
-## Troubleshooting
+### **2. Buat dan Aktifkan Virtual Environment**  
+**Windows:**  
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+**Linux/Mac:**  
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
-1. **Pastikan kedua server (Django dan gRPC) sudah berjalan**.  
-   - Gunakan terminal terpisah untuk menjalankan masing-masing layanan.
+### **3. Instal Dependensi**  
+```bash
+pip install -r requirements.txt
+```
 
-2. **Verifikasi aktivasi virtual environment**:
-   - Jika ada dependensi yang hilang, pastikan Anda berada di virtual environment yang benar.
+### **4. Jalankan Server**  
+```bash
+python manage.py runserver 8000 --settings=sso_service.settings
+```
 
-3. **Mengatasi error umum**:
-   - Jika port sudah terpakai, coba jalankan server pada port yang berbeda:
-     ```bash
-     python manage.py runserver 8001
-     python grpc_server.py --port=50052
-     ```
+Server akan aktif di:  
+```
+http://127.0.0.1:8000
+```
+
+---
+
+## **Cara Penggunaan API**  
+
+### **1. Mendapatkan Token JWT**  
+Gunakan perintah berikut untuk login dan mendapatkan token JWT:  
+```bash
+curl --noproxy "*" -X POST http://127.0.0.1:8000/api/login/ \
+-d "username=alice&password=12345678"
+```
+
+Jika berhasil, respons akan berisi token JWT:  
+```json
+{
+    "access": "<jwt-access-token>",
+    "refresh": "<jwt-refresh-token>"
+}
+```
+
+### **2. Mengakses Endpoint Terproteksi dengan JWT**  
+Gunakan token JWT untuk mengakses route yang membutuhkan otentikasi:  
+```bash
+curl -H "Authorization: Bearer <jwt-access-token>" \
+http://127.0.0.1:8000/api/protected/
+```
