@@ -133,5 +133,6 @@ Jika berhasil, respons akan berisi token JWT:
 ### **2. Mengakses Endpoint Terproteksi dengan JWT**  
 Gunakan token JWT untuk mengakses route yang membutuhkan otentikasi:  
 ```bash
-curl -H "Authorization: Bearer <jwt-access-token>" http://127.0.0.1:8000/api/protected/
+curl --noproxy "*" -X POST http://127.0.0.1:8000/api/token/verify/ -H "Content-Type: application/json" -d "{\"token\": \"<jwt-access-token>\"}"
+
 ```
